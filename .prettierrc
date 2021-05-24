@@ -1,0 +1,11 @@
+{
+    "arrowParens": "avoid",
+    "tabWidth": 4,
+    "overrides": [{
+        "files": ["*.js", "*.jsx"],
+        "options": {
+            "tabWidth": 2
+        }
+    }]
+    
+}
