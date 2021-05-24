@@ -24,9 +24,7 @@ const App = () => {
   });
 
   // app global state
-  const [transactionsList, setTransactionsList] = useState([
-    new Transaction("someId"),
-  ]);
+  const [transactionsList, setTransactionsList] = useState([]);
   const [isModalOpened, setModalOpened] = useState(false);
 
   const openModal = () => {
@@ -37,6 +35,17 @@ const App = () => {
     setModalOpened(false);
   };
 
+  const addTransaction = (title, amount, date) => {
+    setTransactionsList([
+      ...transactionsList,
+      new Transaction(title, amount, date),
+    ]);
+  };
+
+  const removeTransaction = id => {
+    setTransactionsList(transactionsList.filter(el => el.id !== id));
+  };
+
   return (
     <main className="app">
       <ThemeProvider theme={theme}>
@@ -45,7 +54,12 @@ const App = () => {
           <Chart />
           <TransactionList list={transactionsList} />
         </AppBody>
-        <Modal open={isModalOpened} closeFunction={closeModal} />
+        <Modal
+          open={isModalOpened}
+          closeModal={closeModal}
+          closeFunction={closeModal}
+          addNewTransaction={addTransaction}
+        />
         <Fab onClick={openModal} />
       </ThemeProvider>
     </main>

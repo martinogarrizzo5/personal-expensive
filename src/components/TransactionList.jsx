@@ -1,5 +1,3 @@
-import Transaction from "../models/Transaction";
-
 import { Card, Avatar, IconButton, CardHeader } from "@material-ui/core";
 import { Delete as DeleteIcon } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
@@ -9,9 +7,9 @@ const TransactionList = props => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.list}>
       {props.list.map(el => (
-        <TransactionCard date={el.date} />
+        <TransactionCard date={el.date} title={el.title} amount={el.amount} />
       ))}
     </div>
   );
@@ -20,11 +18,13 @@ const TransactionList = props => {
 const TransactionCard = props => {
   const classes = useStyles();
 
+  const fixedAmount = props.amount.toFixed(2);
+
   return (
     <Card elevation={4} className={classes.card}>
-      <Avatar className={classes.cardAvatar}>$32.50</Avatar>
+      <Avatar className={classes.cardAvatar}>${fixedAmount}</Avatar>
       <CardHeader
-        title={<p className={classes.cardTitle}>Title Card</p>}
+        title={<p className={classes.cardTitle}>{props.title}</p>}
         subheader={
           <p className={classes.cardSubTitle}>{props.date.toString()}</p>
         }
@@ -38,8 +38,14 @@ const TransactionCard = props => {
 };
 
 const useStyles = makeStyles(theme => ({
+  list: {
+    height: "80vh",
+    overflowY: "auto",
+    padding: "20px 10px 30px",
+  },
   card: {
     padding: "10px 20px",
+    marginBottom: "20px",
     display: "flex",
     alignItems: "center",
   },
@@ -48,7 +54,6 @@ const useStyles = makeStyles(theme => ({
     height: "70px",
     backgroundColor: theme.primary,
     fontSize: "20px",
-    border: `2px solid ${theme.primary}`,
   },
   cardText: {
     flex: 1,

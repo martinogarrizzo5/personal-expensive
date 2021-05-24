@@ -1,15 +1,15 @@
+import { v4 as uuid4 } from "uuid";
+
 class Transaction {
-  constructor(id, title, date, amount) {
-    this.id = id;
+  constructor(title, amount, date) {
+    this.id = uuid4();
     this.title = title;
-    this.date =
-      date ||
-      new Date().toLocaleDateString("en-gb", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      });
     this.amount = amount;
+    this.date = date.toLocaleDateString("en-gb", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
   }
 }
 
