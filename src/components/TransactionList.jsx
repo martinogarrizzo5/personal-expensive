@@ -9,7 +9,14 @@ const TransactionList = props => {
   return (
     <div className={classes.list}>
       {props.list.map(el => (
-        <TransactionCard date={el.date} title={el.title} amount={el.amount} />
+        <TransactionCard
+          date={el.date}
+          title={el.title}
+          amount={el.amount}
+          key={el.id}
+          id={el.id}
+          removeItem={props.removeItem}
+        />
       ))}
     </div>
   );
@@ -18,11 +25,13 @@ const TransactionList = props => {
 const TransactionCard = props => {
   const classes = useStyles();
 
-  const fixedAmount = props.amount.toFixed(2);
+  const removeTransaction = () => {
+    props.removeItem(props.id);
+  };
 
   return (
     <Card elevation={4} className={classes.card}>
-      <Avatar className={classes.cardAvatar}>${fixedAmount}</Avatar>
+      <Avatar className={classes.cardAvatar}>${props.amount.toFixed(2)}</Avatar>
       <CardHeader
         title={<p className={classes.cardTitle}>{props.title}</p>}
         subheader={
@@ -30,7 +39,7 @@ const TransactionCard = props => {
         }
         className={classes.cardText}
       ></CardHeader>
-      <IconButton className={classes.deleteButton}>
+      <IconButton className={classes.deleteButton} onClick={removeTransaction}>
         <DeleteIcon className={classes.deleteIcon} />
       </IconButton>
     </Card>

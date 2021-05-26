@@ -3,6 +3,7 @@ import { useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { SwipeableDrawer, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 
 const Modal = props => {
   const classes = useStyles();
@@ -23,10 +24,16 @@ const Modal = props => {
     setAmount(event.target.value);
   };
 
-  const addNewTransaction = () => {
-    if (title && amount && selectedDate) {
+  const isValidDate = date => {
+    return date instanceof Date && !isNaN(date);
+  };
+
+  const addNewTransaction = e => {
+    e.preventDefault();
+    if (title && amount && isValidDate(selectedDate)) {
+      console.log(selectedDate);
       props.addNewTransaction(title, parseFloat(amount), selectedDate);
-      setSelectedDate(new Date());
+      setSelectedDate(new Date(selectedDate));
       setTitle("");
       setAmount("");
       props.closeModal();
@@ -40,18 +47,16 @@ const Modal = props => {
       onClose={props.closeFunction}
       className={classes.modalSheet}
     >
-      <div className={classes.modalSheet}>
+      <form className={classes.modalSheet} onSubmit={addNewTransaction}>
         <TextField
           label="Title"
           className={classes.textField}
-          autoComplete={false}
           onChange={handleTitleChange}
           value={title}
         />
         <TextField
           label="Amount"
           className={classes.textField}
-          autoComplete={false}
           type="number"
           onChange={handleAmountChange}
           value={amount}
@@ -68,14 +73,14 @@ const Modal = props => {
           minDate={new Date("2020")}
         />
         <Button
+          type="submit"
           variant="contained"
           color="primary"
           className={classes.submitButton}
-          onClick={addNewTransaction}
         >
           Add Transaction
         </Button>
-      </div>
+      </form>
     </SwipeableDrawer>
   );
 };

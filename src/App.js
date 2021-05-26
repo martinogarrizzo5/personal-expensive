@@ -43,7 +43,11 @@ const App = () => {
   };
 
   const removeTransaction = id => {
-    setTransactionsList(transactionsList.filter(el => el.id !== id));
+    setTransactionsList(
+      transactionsList.filter(el => {
+        return el.id !== id;
+      })
+    );
   };
 
   return (
@@ -52,7 +56,10 @@ const App = () => {
         <AppBar title="Expensive App" openModal={openModal} />
         <AppBody>
           <Chart />
-          <TransactionList list={transactionsList} />
+          <TransactionList
+            list={transactionsList}
+            removeItem={removeTransaction}
+          />
         </AppBody>
         <Modal
           open={isModalOpened}
