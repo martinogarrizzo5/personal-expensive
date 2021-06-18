@@ -48,9 +48,21 @@ const TransactionCard = props => {
 
 const useStyles = makeStyles(theme => ({
   list: {
-    height: "80vh",
+    height: "60vh",
     overflowY: "auto",
     padding: "20px 10px 30px",
+    "&::-webkit-scrollbar": {
+      width: "7px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "#f1f1f1",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#888",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "#555",
+    },
   },
   card: {
     padding: "10px 20px",
@@ -66,7 +78,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardText: {
     flex: 1,
-    marginLeft: "20px",
+    marginLeft: "10px",
   },
   cardTitle: {
     fontWeight: 600,

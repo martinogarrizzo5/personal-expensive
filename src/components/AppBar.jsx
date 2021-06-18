@@ -17,7 +17,9 @@ const MyAppBar = props => {
 
 const useStyles = makeStyles({
   root: {
-    padding: "8px",
+    height: "10vh",
+    padding: "10px 30px",
+    letterSpacing: "2px",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",

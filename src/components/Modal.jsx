@@ -3,7 +3,6 @@ import { useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { SwipeableDrawer, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { LocalConvenienceStoreOutlined } from "@material-ui/icons";
 
 const Modal = props => {
   const classes = useStyles();
@@ -30,8 +29,13 @@ const Modal = props => {
 
   const addNewTransaction = e => {
     e.preventDefault();
-    if (title && amount && isValidDate(selectedDate)) {
-      console.log(selectedDate);
+    if (
+      title &&
+      amount > 0 &&
+      isValidDate(selectedDate) &&
+      selectedDate < new Date() &&
+      selectedDate > new Date("2020")
+    ) {
       props.addNewTransaction(title, parseFloat(amount), selectedDate);
       setSelectedDate(new Date(selectedDate));
       setTitle("");
@@ -45,6 +49,7 @@ const Modal = props => {
       anchor="bottom"
       open={props.open}
       onClose={props.closeFunction}
+      onOpen={() => {}}
       className={classes.modalSheet}
     >
       <form className={classes.modalSheet} onSubmit={addNewTransaction}>

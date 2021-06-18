@@ -8,7 +8,7 @@ const AppBody = props => {
 
 const useStyles = makeStyles({
   main: {
-    padding: "20px",
+    padding: "10px",
     display: "flex",
     flexDirection: "column",
   },

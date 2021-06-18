@@ -42,6 +42,29 @@ const App = () => {
     ]);
   };
 
+  const getRecentTransactionsTable = () => {
+    const today = new Date();
+    const sevenDaysBefore = new Date();
+    sevenDaysBefore.setDate(today.getDate() - 7);
+
+    const transactionTable = {};
+
+    for (let transaction of transactionsList) {
+      const date = new Date(transaction.date);
+
+      if (date > sevenDaysBefore && date <= today) {
+        const numberDay = date.getDate();
+        if (numberDay in transactionTable) {
+          transactionTable[numberDay] += transaction.amount;
+        } else {
+          transactionTable[numberDay] = transaction.amount;
+        }
+      }
+    }
+
+    return transactionTable;
+  };
+
   const removeTransaction = id => {
     setTransactionsList(
       transactionsList.filter(el => {
@@ -55,7 +78,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <AppBar title="Expensive App" openModal={openModal} />
         <AppBody>
-          <Chart />
+          <Chart getTransactions={getRecentTransactionsTable} />
           <TransactionList
             list={transactionsList}
             removeItem={removeTransaction}
